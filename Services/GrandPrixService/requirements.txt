@@ -1,6 +1,6 @@
 fastapi
 gunicorn
-pydantic==1.10.11
+pydantic==1.10.16
 uvicorn
 #uvloop
 httptools

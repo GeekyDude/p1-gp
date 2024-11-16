@@ -16,15 +16,15 @@ def ReadFile(path):
     with open(path, 'r') as f:
         return f.read().rstrip()    
 if (not len(firebase_admin._apps)):
-    if exists("huntfishbuddy-test-serviceaccount.json"):
-        cred = credentials.Certificate("huntfishbuddy-test-serviceaccount.json")
+    if exists("p1-gp.json"):
+        cred = credentials.Certificate("p1-gp.json")
         default_app = firebase_admin.initialize_app(cred)
-        sharedState.state['ServiceAccountKey'] = 'huntfishbuddy-test-serviceaccount.json'
+        sharedState.state['ServiceAccountKey'] = 'p1-gp.json'
         sharedState.state['Environment'] = 'test'
     else:
-        cred = credentials.Certificate('/mnt/hfb/serviceaccount')
+        cred = credentials.Certificate('/mnt/p1/serviceaccount')
         default_app = firebase_admin.initialize_app(cred)
-        sharedState.state['ServiceAccountKey'] = '/mnt/hfb/serviceaccount'
+        sharedState.state['ServiceAccountKey'] = '/mnt/p1/serviceaccount'
         sharedState.state['Environment'] = ''
 sharedState.state['db'] = firestore_async.client()
 sharedState.state['bq'] = bigquery.Client.from_service_account_json(sharedState.state['ServiceAccountKey'])
