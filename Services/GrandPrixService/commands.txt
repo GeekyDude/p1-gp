@@ -1,0 +1,23 @@
+#to run
+uvicorn main:app --reload
+
+gcloud config set project huntfishbuddy-ee5a7
+
+# retrieve project-id of active project
+gcloud config get-value project
+
+# build docker/container image
+gcloud builds submit --tag gcr.io/{MY-PROJECT-ID}/RewardService
+
+
+
+# cloud run deploy
+gcloud run deploy --image {MY-CONTAINER-URL} --platform managed
+
+
+#deploy to cloud run
+gcloud run deploy
+
+
+#to run tests
+python3 -m pytest
