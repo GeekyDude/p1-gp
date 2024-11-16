@@ -15,6 +15,7 @@ from os.path import exists
 def ReadFile(path):
     with open(path, 'r') as f:
         return f.read().rstrip()    
+    
 if (not len(firebase_admin._apps)):
     if exists("p1-gp.json"):
         cred = credentials.Certificate("p1-gp.json")
@@ -49,6 +50,5 @@ app.add_middleware(
 )
 
 app.include_router(router)
-
 
 # uvicorn main:app --reload
