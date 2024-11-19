@@ -1,0 +1,7 @@
+# to set CORS`
+gsutil cors set cors.json gs://testp1-gp-drivers
+gsutil cors set cors.json gs://p1-gp-drivers
+
+$to allow read.
+gsutil defacl set public-read gs://testp1-gp-drivers
+gsutil defacl set public-read gs://p1-gp-drivers

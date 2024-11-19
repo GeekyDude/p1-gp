@@ -8,3 +8,7 @@ class Error(BaseModel):
 #1-99 // User errors
 UserNotAuthorized = {"Num" : 1, "Message" : "User is Not Authorized!"}
 UserIdInvalid = {"Num" : 2, "Message" : "User Id is Invalid!"}
+
+#200-299 // File Error
+InvalidFileType = {"Num" : 200, "Message" : "Invalid File Type!"}
+InvalidFeedStatus = {"Num" : 201, "Message" : "Invalid Feed Status!"}
