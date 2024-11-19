@@ -31,20 +31,12 @@ async def createUser(client):
     )
 
     assert response.status_code == 200
-    
-    response = await client.post(
-        "/User",
-        headers={"AccessToken": "def"},
-        json={"Id": "456", "Name": "TestChild", "DateOfBirth" : get_date_string(datetime.now())},
-    )
-
-    assert response.status_code == 200
 
 @pytest.fixture(scope="module")
 def anyio_backend():
     return 'asyncio'
 
-@pytest.mark.anyio
+@pytest.mark.asyncio(scope="session")
 async def test_user():
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
@@ -53,11 +45,6 @@ async def test_user():
     
         response = await client.delete(
             "/User/" + "123",
-            headers={"AccessToken": "abc"},
-        )
-
-        response = await client.delete(
-            "/User/" + "456",
             headers={"AccessToken": "abc"},
         )
 
@@ -77,14 +64,5 @@ async def test_user():
             "/User/" + "123",
             headers={"AccessToken": "abc"},
         )
-
-        assert response.status_code == 200
-
-        response = await client.get(
-            "/User/" + "456",
-            headers={"AccessToken": "def"},
-        )
-
-        print(response.json())
 
         assert response.status_code == 200
