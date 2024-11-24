@@ -17,7 +17,7 @@ jobs:
           run: |
             echo "$MY_SECRET" >> p1-gp.json
           shell: bash
-          working-directory: ./Services/GrandPrixService/
+          working-directory: ./Services/AgentService/
           env:
             MY_SECRET: ${{secrets.serviceAccountKey}}
 
@@ -31,11 +31,11 @@ jobs:
           #  run: docker build . -t $IMAGE_NAME
 
         - name: Install Dependencies
-          working-directory: ./Services/GrandPrixService/
+          working-directory: ./Services/AgentService/
           run: pip install -r requirements.txt
 
         - name: Run Tests
-          working-directory: ./Services/GrandPrixService/
+          working-directory: ./Services/AgentService/
           run: |
             pip install pytest
             python -m pytest

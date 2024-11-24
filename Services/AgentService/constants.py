@@ -8,7 +8,7 @@ def User(sharedState):
     return "User"
 
 
-def Driver(sharedState):
+def Agent(sharedState):
     if sharedState is None or 'Environment' not in sharedState or sharedState['Environment'] == 'test':
-        return "TestDriver"
-    return "Driver"
+        return "TestAgent"
+    return "Agent"
