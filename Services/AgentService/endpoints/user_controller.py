@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, HTTPException, BackgroundTasks
 
 from globalvars import sharedState
 
-from Model import GrandPrixServiceErrorCodes
+from Model import AgentServiceErrorCodes
 
 import constants
 from Model.User import UserInput, UserOutput
@@ -21,13 +21,13 @@ async def post(User: UserInput, request: Request, background_tasks: BackgroundTa
     userId = 0
     valid, userId = auth.IsUserAuthorized(request.headers)
     if not valid:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     if User.Id == '':
         user.Id = userId
 
     if User.Id != userId:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     #If the user Date Of birth is less than 18 years, then the user is a child
 
@@ -67,17 +67,17 @@ async def get(request: Request, userId: str):
     database = db
     valid, tokenUserId = auth.IsUserAuthorized(request.headers)
     if not valid:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     if tokenUserId != userId:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     doc_ref = database.collection(constants.User(state)).document(userId)
     doc = await doc_ref.get()
     if doc.exists:
         user = doc.to_dict()
         return user
-    raise HTTPException(status_code=404, detail=GrandPrixServiceErrorCodes.UserIdInvalid)
+    raise HTTPException(status_code=404, detail=AgentServiceErrorCodes.UserIdInvalid)
 
 @router.delete("/User/{userId}", name="Delete user info", description="Delete", response_model=str)
 async def delete(request: Request, userId: str):
@@ -87,10 +87,10 @@ async def delete(request: Request, userId: str):
     database = db
     valid, tokenUserId = auth.IsUserAuthorized(request.headers)
     if not valid:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     if tokenUserId != userId:
-        raise HTTPException(status_code=401, detail=GrandPrixServiceErrorCodes.UserNotAuthorized)
+        raise HTTPException(status_code=401, detail=AgentServiceErrorCodes.UserNotAuthorized)
 
     doc_ref = database.collection(constants.User(state)).document(userId)
     doc = await doc_ref.get()

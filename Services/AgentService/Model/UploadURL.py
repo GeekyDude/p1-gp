@@ -1,20 +1,16 @@
 from pydantic import BaseModel, validator
 from enum import Enum
 
-class FileType(str, Enum):
-    Driver = 'Driver'
 
 class FileFormat(str, Enum):
     python = 'python'
 
 class UploadURLRequest(BaseModel):
-    DriverId : str
-    FileType : FileType
+    AgentId : str
     FileFormat : FileFormat
 
 class UploadURLResponse(BaseModel):
     UploadUrl : str
-    DriverId : str
+    AgentId : str
     UserId : str
     FileFormat : FileFormat
-    FileType : FileType

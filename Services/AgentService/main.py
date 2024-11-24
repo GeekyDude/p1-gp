@@ -32,8 +32,8 @@ sharedState.state['bq'] = bigquery.Client.from_service_account_json(sharedState.
 
 # fastapi app
 app = FastAPI(
-    title="GrandPrix Serivce API",
-    description="API for the GrandPrix service",
+    title="Agent Serivce API",
+    description="API for the Agent service",
     version="0.1"
 )
 

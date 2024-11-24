@@ -13,6 +13,8 @@ from httpx import ASGITransport, AsyncClient
 
 from Model.Paging import Direction
 
+from Model.Agent import AgentType
+
 # client = TestClient(app)
 
 sharedState.state['auth'] = MockAuth.Authorization()
@@ -22,50 +24,50 @@ def anyio_backend():
     return 'asyncio'
 
 @pytest.mark.asyncio(scope="session")
-async def test_driver():
+async def test_agent():
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
 
         response = await client.post(
-            "/Drivers/",
+            "/Agents/",
             headers={"AccessToken": "abc"},
-            json={"DriverId": "", "Direction" : Direction.Ascending},
+            json={"AgentId": "", "Direction" : Direction.Ascending},
         )
 
         assert response.status_code == 200
 
         json = response.json()
-        drivers = json['Drivers']
+        agents = json['Agents']
 
-        for driver in drivers:
+        for agent in agents:
             response = await client.delete(
-                "/Driver/" + driver['Id'],
+                "/Agent/" + agent['Id'],
                 headers={"AccessToken": "abc"},
             )
 
     
         response = await client.post(
-            "/Driver/",
+            "/Agent/",
             headers={"AccessToken": "abc"},
-            json={"Id" : "", "Name": "Kimi"},
+            json={"Id" : "", "Name": "Kimi", "AgentType": AgentType.Driver},
         )                
 
         assert response.status_code == 200
         json = response.json()
 
-        driverId = json['Id']
+        agentId = json['Id']
 
         response = await client.post(
-            "/Driver/",
+            "/Agent/",
             headers={"AccessToken": "abc"},
-            json={"Id" : driverId, "Name": "Kimi Raikonnen"},
+            json={"Id" : agentId, "Name": "Kimi Raikonnen", "AgentType": AgentType.Driver},
         )
 
         assert response.status_code == 200
 
         response = await client.get(
-            "/Driver/" + json['Id'],
+            "/Agent/" + json['Id'],
             headers={"AccessToken": "abc"},
         )
 
@@ -76,7 +78,7 @@ async def test_driver():
         assert json['Name'] == "Kimi Raikonnen"
 
         response = await client.delete(
-            "/Driver/" + json['Id'],
+            "/Agent/" + json['Id'],
             headers={"AccessToken": "abc"},
         )
 
